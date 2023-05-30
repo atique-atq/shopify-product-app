@@ -4,7 +4,8 @@ import { ResourcePicker } from "@shopify/app-bridge-react";
 import { useState } from "react";
 
 export const ProductList = ({ data, isLoading, isRefetching }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+
   if (isLoading || isRefetching) {
     return (
       <Layout>
@@ -13,8 +14,37 @@ export const ProductList = ({ data, isLoading, isRefetching }) => {
     );
   }
 
+  const handleSelection = (resources) => {
+    setIsOpen(false);
+    console.log("Selected resources:", resources);
+  };
+
+  const handleCancel = () => {
+    setIsOpen(false);
+    console.log("Resource picker closed without selection");
+  };
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
   return (
     <Layout>
+      <Layout.Section>
+        <button onClick={handleOpen}>Open Resource Picker</button>
+        {isOpen && (
+          <ResourcePicker
+            resourceType="Product"
+            open={isOpen}
+            onCancel={handleCancel}
+            onSelection={handleSelection}
+            showVariants={false}
+            allowMultiple={false}
+            initialSelectionIds={[]}
+            showHidden={false}
+          />
+        )}
+      </Layout.Section>
       {data?.products.length ? (
         data.products.map((product) => (
           <Layout.Section key={product.id}>
@@ -23,12 +53,6 @@ export const ProductList = ({ data, isLoading, isRefetching }) => {
         ))
       ) : (
         <>
-          <Layout.Section>
-            <ResourcePicker 
-            resourceType="Product"
-            open={isOpen}
-             />
-          </Layout.Section>
           <Layout.Section>
             <Card>
               <EmptyState
