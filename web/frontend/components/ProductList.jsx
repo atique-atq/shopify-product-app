@@ -13,6 +13,7 @@ import { useState } from "react";
 
 export const ProductList = ({ data, isLoading, isRefetching }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(false);
 
   if (isLoading || isRefetching) {
     return (
@@ -24,7 +25,11 @@ export const ProductList = ({ data, isLoading, isRefetching }) => {
 
   const handleSelection = (resources) => {
     setIsOpen(false);
-    console.log("Selected resources:", resources);
+    const resourcePicker = resources?.selection[0];
+    // const selectedItem = data?.products.find((product) => {
+    //   return product.id === resoucePicker.id;
+    // });
+    setSelectedProduct(resourcePicker);
   };
 
   const handleCancel = () => {
@@ -65,10 +70,16 @@ export const ProductList = ({ data, isLoading, isRefetching }) => {
           />
         )}
       </Layout.Section>
-      {data?.products.length ? (
+
+      {selectedProduct && (
+        <Layout.Section>
+          <ProductCard product={selectedProduct}></ProductCard>
+        </Layout.Section>
+      )}
+      {/* {data?.products.length ? (
         data.products.map((product) => (
           <Layout.Section key={product.id}>
-            <ProductCard {...product}></ProductCard>
+            <ProductCard product={product}></ProductCard>
           </Layout.Section>
         ))
       ) : (
@@ -84,7 +95,7 @@ export const ProductList = ({ data, isLoading, isRefetching }) => {
             </Card>
           </Layout.Section>
         </>
-      )}
+      )} */}
     </Layout>
   );
 };

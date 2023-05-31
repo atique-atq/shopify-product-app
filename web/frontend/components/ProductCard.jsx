@@ -11,11 +11,11 @@ import { useAuthenticatedFetch } from "../hooks";
 import { Variants } from "./Variants";
 import { useNavigate, Toast } from "@shopify/app-bridge-react";
 
-export const ProductCard = (props) => {
-  const [title, setTitle] = useState(props.title);
-  const [description, setDescription] = useState(props.description);
+export const ProductCard = ({ product }) => {
+  const [title, setTitle] = useState(product.title);
+  const [description, setDescription] = useState(product.description);
   const [showVariants, setShowVariants] = useState(false);
-  const [variants, setVariants] = useState(props.variants);
+  const [variants, setVariants] = useState(product.variants);
   const [showToast, setShowToast] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const fetch = useAuthenticatedFetch();
@@ -31,7 +31,7 @@ export const ProductCard = (props) => {
     setIsUpdating(true);
 
     const updatedProduct = {
-      id: props.id,
+      id: product.id,
       title,
       description,
       variants,
@@ -81,7 +81,7 @@ export const ProductCard = (props) => {
             content: "View in Admin",
             onAction: () =>
               navigate(
-                { name: "Product", resource: { id: props.legacyId } },
+                { name: "Product", resource: { id: product.legacyId } },
                 { target: "new" }
               ),
           },
@@ -89,7 +89,7 @@ export const ProductCard = (props) => {
       >
         <Stack spacing="extraLoose">
           <Stack.Item>
-            <img src={props.image} alt="" width="250" />
+            <img src={product.image} alt="" width="250" />
           </Stack.Item>
           <Stack.Item fill>
             <FormLayout>
