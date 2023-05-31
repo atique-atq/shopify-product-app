@@ -1,4 +1,12 @@
-import { EmptyState, Layout, Spinner, Card } from "@shopify/polaris";
+import {
+  EmptyState,
+  Layout,
+  Spinner,
+  Card,
+  FooterHelp,
+  Button,
+  TextContainer,
+} from "@shopify/polaris";
 import { ProductCard } from "./ProductCard";
 import { ResourcePicker } from "@shopify/app-bridge-react";
 import { useState } from "react";
@@ -31,7 +39,19 @@ export const ProductList = ({ data, isLoading, isRefetching }) => {
   return (
     <Layout>
       <Layout.Section>
-        <button onClick={handleOpen}>Open Resource Picker</button>
+        <Card
+          title="Modify Product"
+          sectioned
+          primaryFooterAction={{
+            content: "select product",
+            onAction: handleOpen,
+          }}
+        >
+          <TextContainer spacing="loose">
+            <p>Select a product to update its details</p>
+          </TextContainer>
+        </Card>
+
         {isOpen && (
           <ResourcePicker
             resourceType="Product"

@@ -49,7 +49,7 @@ export function ProductsCard() {
         ]}
       >
         <TextContainer spacing="loose">
-          <p>Use this nifty tool to create and update products</p>
+          <p>See the product list here. You can also add 5 products</p>
         </TextContainer>
       </Card>
     </>
